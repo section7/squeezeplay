@@ -1,0 +1,12 @@
+
+LUA_50_INCLUDE= $(PREFIX)/include
+
+LUA_50_OUTPUT= profiler.so
+
+INCS= -I$(LUA_50_INCLUDE)
+#WARN= -ansi -pedantic -W -Wall
+EXTRA_LIBS=
+CC=gcc
+CFLAGS= -fPIC -O2 -s -DTESTS $(WARN) $(INCS) -I./src
+LDFLAGS= -R$(PREFIX)/lib
+
