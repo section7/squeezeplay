@@ -20,7 +20,7 @@ export LDFLAGS=-L${PREFIX}/lib
 
 export TOOLPATH = $(shell dirname `which gcc`)
 
-export SDL_CONFIG = ${BUILD_TOP}/bin/sdl-config
+export SDL_CONFIG = /usr/bin/sdl-config
 
 ENABLE_PROFILING=--enable-profiling --disable-shared
 USE_MMX=--disable-mmx
@@ -38,55 +38,7 @@ endif
 # Top level targets
 #
 .PHONY: all
-all: sdl-all lua-all app
-
-
-
-#####
-# SDL
-#####
-
-.PHONY: sdl-all freetype sdl sdl-image sdl-tff sdl-gfx c-ares
-sdl-all: freetype sdl sdl-ttf sdl-image sdl-gfx
-
-generated:
-	mkdir -p generated
-
-
-# freetype
-freetype-2.1.10/config.mk:
-	cd freetype-2.1.10; ./configure --enable-shared ${ENABLE_PROFILING} --host=${HOST} --target=${TARGET} --prefix=${PREFIX}
-
-freetype: freetype-2.1.10/config.mk
-	cd freetype-2.1.10; make; make install
-
-# sdl
-SDL-1.2.13/Makefile:
-	cd SDL-1.2.13; ./configure  ${ENABLE_PROFILING} --host=${HOST} --target=${TARGET} --prefix=${PREFIX}
-
-sdl: SDL-1.2.13/Makefile
-	cd SDL-1.2.13; make && make install
-
-# sdl_image (requires jpeg tiff png)
-SDL_image-1.2.5/Makefile:
-	cd SDL_image-1.2.5; SDL_CONFIG=${PREFIX}/bin/sdl-config ./configure --disable-tif  --host=${HOST} --target=${TARGET} ${ENABLE_PROFILING} --prefix=${PREFIX} ${LIBPNG} ${LIBJPEG}
-
-sdl-image: SDL_image-1.2.5/Makefile
-	cd SDL_image-1.2.5; make && make install
-
-# sdl_ttf
-SDL_ttf-2.0.8/Makefile:
-	cd SDL_ttf-2.0.8; SDL_CONFIG=${PREFIX}/bin/sdl-config ./configure  ${ENABLE_PROFILING} --host=${HOST} --target=${TARGET} --prefix=${PREFIX} --with-freetype-prefix=${PREFIX} --without-opengl
-
-sdl-ttf: SDL_ttf-2.0.8/Makefile
-	cd SDL_ttf-2.0.8; make && make install
-
-# sdl_gfx
-SDL_gfx-2.0.15/Makefile:
-	cd SDL_gfx-2.0.15; ./configure ${ENABLE_PROFILING} ${USE_MMX} --host=${HOST} --target=${TARGET} --prefix=${PREFIX}
-
-sdl-gfx: SDL_gfx-2.0.15/Makefile
-	cd SDL_gfx-2.0.15; make && make install
+all: lua-all app
 
 
 #####
@@ -108,11 +60,11 @@ luasocket: lua
 slnunicode: lua
 	cd slnunicode-1.1; make install INSTALL_TOP=${PREFIX} TARGET=$(TARGET) PLATFORM=linux
 
-luajson/Makefile:
-	cd luajson; ./configure --host=${HOST} --target=${TARGET} --prefix=${PREFIX}
-
-luajson: luajson/Makefile
-	cd luajson; make && cp .libs/json.so ${PREFIX}/lib/lua/5.1/json.so
+#luajson/Makefile:
+#	cd luajson; ./configure --host=${HOST} --target=${TARGET} --prefix=${PREFIX}
+#
+#luajson: luajson/Makefile
+#	cd luajson; make && cp .libs/json.so ${PREFIX}/lib/lua/5.1/json.so
 
 luazipfilter/Makefile:
 	cd luazipfilter; ./configure --host=${HOST} --target=${TARGET} --prefix=${PREFIX}
@@ -158,8 +110,8 @@ tolua++: lua
 # squeezeplay
 #
 
-.PHONY: app portaudio flac libmad tremor squeezeplay squeezeplay_desktop squeezeplay_contrib squeezeplay_private freefont freefont-debian axtls rtmp
-app: portaudio flac libmad tremor ${SPPRIVATE_TARGETS} squeezeplay squeezeplay_desktop squeezeplay_contrib freefont rtmp squeezeplay-tgz 
+.PHONY: app portaudio libmad tremor squeezeplay squeezeplay_desktop squeezeplay_contrib squeezeplay_private freefont freefont-debian axtls rtmp
+app: portaudio libmad tremor ${SPPRIVATE_TARGETS} squeezeplay squeezeplay_desktop squeezeplay_contrib freefont rtmp squeezeplay-tgz 
 
 # portaudio
 portaudio_v19_1360/Makefile:
@@ -167,13 +119,6 @@ portaudio_v19_1360/Makefile:
 
 portaudio: portaudio_v19_1360/Makefile
 	cd portaudio_v19_1360; make && make install
-
-# flac
-flac-1.2.1/Makefile:
-	cd flac-1.2.1; ./configure --disable-xmms-plugin --host=${HOST} --target=${TARGET} --prefix=${PREFIX}
-
-flac: flac-1.2.1/Makefile
-	cd flac-1.2.1; make && make install
 
 #libmad
 LIBMAD_DIR=libmad-0.15.1b

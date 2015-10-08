@@ -182,7 +182,7 @@ libui_la_SOURCES = \
 	src/ui/jive_window.c \
 	src/ui/lua_jiveui.c
 
-libui_la_LIBADD = -ltolua++ -llua -lSDL_image -lSDL_ttf -lSDL_gfx -lSDL
+libui_la_LIBADD = -ltolua++ -llua -lSDL_image -lSDL_ttf -lSDL_gfx -lSDL -ldl
 
 libaudio_la_CFLAGS = -DRESAMPLE_EFFECTS -DOUTSIDE_SPEEX -DFIXED_POINT -DRANDOM_PREFIX=jive -DEXPORT=""
 
@@ -241,7 +241,7 @@ jive_SOURCES = \
 	src/jive_debug.c \
 	src/log.c
 
-jive_LDADD = libui.la libdecode.la libnet.la -llua ${SPPRIVATE_LIB}
+jive_LDADD = libui.la libdecode.la libnet.la -llua ${SPPRIVATE_LIB} -ldl
 
 jive_alsa_SOURCES = \
 	src/audio/decode/decode_alsa_backend.c

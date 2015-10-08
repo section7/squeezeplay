@@ -25,7 +25,7 @@ local oo                     = require("loop.simple")
 local math                   = require("math")
 local table                  = require("jive.utils.table")
 local string                 = require("string")
-local json                   = require("json")
+local json                   = require("jive.utils.JSON")
                              
 local Applet                 = require("jive.Applet")
 local System                 = require("jive.System")

@@ -6,7 +6,8 @@
 =head1 NAME
 
 jive.util.jsonfilters - json filters
-
+Modified 2015-10-08 to use pure lua json functions from 
+Jeffrey Friedl - http://regex.info/blog/lua/json
 =head1 DESCRIPTION
 
 A set of ltn12 filters that encode/decode JSON.
@@ -28,7 +29,7 @@ A set of ltn12 filters that encode/decode JSON.
 =cut
 --]]
 
-local json = require("json")
+local json = require("jive.utils.JSON")
 
 module(...)
 
@@ -48,7 +49,7 @@ function decode(chunk)
 	elseif chunk == "" then
 		return ""
 	elseif chunk then
-		return json.decode(chunk)
+		return json:decode(chunk)
 	end
 end
 
@@ -68,7 +69,7 @@ function encode(chunk)
 	elseif chunk == "" then
 		return ""
 	elseif chunk then
-		return json.encode(chunk)
+		return json:encode(chunk)
 	end
 end
 --[[
@@ -76,6 +77,7 @@ end
 =head1 LICENSE
 
 Copyright 2010 Logitech. All Rights Reserved.
+Copyright 2015 Musical Fidelity Ltd. All Rights Reserved.
 
 This file is licensed under BSD. Please see the LICENSE file for details.
 

@@ -415,13 +415,6 @@ static int jiveL_process_events(lua_State *L) {
 		jive_sdlevent_pump(L);
 	}
 
-	/* check queue size */
-	if (perfwarn.queue) {
-		if (SDL_EventQueueLength() > perfwarn.queue) {
-			printf("SDL_event_queue > %2d : %3d\n", perfwarn.queue, SDL_EventQueueLength());
-		}
-	}
-
 	/* process events */
 	process_timers(L);
 	while (SDL_PeepEvents(&event, 1, SDL_GETEVENT, SDL_ALLEVENTS) > 0 ) {

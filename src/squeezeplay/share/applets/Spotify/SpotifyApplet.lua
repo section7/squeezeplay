@@ -5,7 +5,7 @@ local log              = require("jive.utils.log").logger("audio.decode")
 local Applet           = require("jive.Applet")
 local Framework        = require("jive.ui.Framework")
 local Timer            = require("jive.ui.Timer")
-local json             = require("json")
+local json             = require("jive.utils.JSON")
 local mime             = require("mime")
 
 local hasDecode, decode = pcall(require, "squeezeplay.decode")

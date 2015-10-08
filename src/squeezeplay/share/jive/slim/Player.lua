@@ -41,7 +41,7 @@ local _assert, assert, require, setmetatable, tonumber, tostring, ipairs, pairs,
 local os             = require("os")
 local math           = require("math")
 local table          = require("jive.utils.table")
-local json           = require("json")
+local json           = require("jive.utils.JSON")
 
 local oo             = require("loop.base")
 
